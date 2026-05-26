@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://utilesrd.com/</loc>
+        <priority>1.00</priority>
+    </url>
+
+    <url>
+        <loc>https://utilesrd.com/blog</loc>
+        <priority>0.80</priority>
+    </url>
+
+    <url>
+        <loc>https://utilesrd.com/blog/como-calcular-itbis-republica-dominicana-dgii</loc>
+        <priority>0.80</priority>
+    </url>
+    <url>
+        <loc>https://utilesrd.com/blog/introduccion-desarrollo-web-flask-python</loc>
+        <priority>0.80</priority>
+    </url>
+
+    <url>
+        <loc>https://utilesrd.com/tools/calculadora-itbis</loc>
+        <priority>0.90</priority>
+    </url>
+    <url>
+        <loc>https://utilesrd.com/tools/usd-dop</loc>
+        <priority>0.90</priority>
+    </url>
+    <url>
+        <loc>https://utilesrd.com/tools/generador-qr</loc>
+        <priority>0.90</priority>
+    </url>
+    <url>
+        <loc>https://utilesrd.com/tools/jpg-a-pdf</loc>
+        <priority>0.90</priority>
+    </url>
+</urlset>

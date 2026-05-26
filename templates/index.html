@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5 my-3">
+    <div class="row justify-content-center">
+        <div class="col-xl-10">
+            
+            <div class="mb-4 text-center text-sm-start">
+                <span class="small text-muted text-uppercase fw-semibold tracking-wider" style="font-size: 11px; letter-spacing: 1px;">Utilidades de un solo clic</span>
+            </div>
+
+            <div class="tool-wall shadow-sm" id="herramientas">
+                <div class="row g-0">
+                    {% for tool in tools %}
+                    <div class="col-12 col-md-6 border-wall">
+                        <a href="{{ tool.url }}" class="tool-tile d-flex flex-column justify-content-between p-4 h-100 text-decoration-none">
+                            <div>
+                                <div class="tile-icon mb-3 text-primary">
+                                    <i class="bi {{ tool.icon }} fs-3"></i>
+                                </div>
+                                <h2 class="h5 fw-bold text-current mb-2" style="letter-spacing: -0.4px;">{{ tool.title }}</h2>
+                                <p class="text-muted small mb-0 style-lh">{{ tool.desc }}</p>
+                            </div>
+                            <div class="pt-4 d-flex align-items-center gap-2 small text-primary fw-medium">
+                                <span>Abrir utilidad</span>
+                                <i class="bi bi-arrow-right arrow-animate"></i>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    .style-lh { line-height: 1.5; }
+</style>
+{% endblock %}

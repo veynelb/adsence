@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}UtilesRD | Herramientas Online Gratis{% endblock %}</title>
+    <meta name="description" content="{% block description %}Todas las herramientas online que necesitas en un solo lugar. Calculadora ITBIS, conversor de divisas, generadores y más.{% endblock %}">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        /* Variables Globales de Diseño (Modo Claro por Defecto) */
+        :root {
+            --bg-main: #ffffff;
+            --bg-nav: #ffffff;
+            --bg-tile: #ffffff;
+            --bg-tile-hover: #f8fafc;
+            --text-color: #0f172a;
+            --border-color: #e2e8f0;
+            --text-muted: #64748b;
+            --footer-bg: #111827;
+            --footer-text: #9ca3af;
+        }
+
+        /* Variables de Modo Oscuro - Estilo Carbono Premium (Odoo 18 Minimal) */
+        [data-theme="dark"] {
+            --bg-main: #121212;
+            --bg-nav: #121212;
+            --bg-tile: #1e1e1e;
+            --bg-tile-hover: #2a2a2a;
+            --text-color: #f5f5f7;
+            --border-color: #2d2d2d;
+            --text-muted: #a1a1a6;
+            --footer-bg: #0a0a0a;
+            --footer-text: #6e6e73;
+        }
+
+        /* Aplicación Estricta de Colores Fluidos */
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-color);
+            font-family: system-ui, -apple-system, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .text-current { color: var(--text-color) !important; }
+        .text-muted { color: var(--text-muted) !important; }
+        
+        /* Menú Minimalista Sin Fondos Forzados */
+        .custom-nav { 
+            background-color: var(--bg-nav) !important; 
+            border-bottom: 1px solid var(--border-color) !important; 
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: -0.8px;
+            font-size: 1.25rem;
+        }
+
+        .nav-link-custom {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        /* Estructura de Muro / Pared de Herramientas */
+        .tool-wall {
+            background-color: var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .border-wall {
+            background-color: var(--bg-tile);
+            border: 0.5px solid var(--border-color);
+            transition: background-color 0.2s ease;
+        }
+
+        .tool-tile {
+            background-color: var(--bg-tile);
+            transition: all 0.2s ease;
+        }
+
+        .tool-tile:hover {
+            background-color: var(--bg-tile-hover);
+        }
+
+        .arrow-animate {
+            transition: transform 0.2s ease;
+        }
+        .tool-tile:hover .arrow-animate {
+            transform: translateX(4px);
+        }
+        
+        .tile-icon {
+            opacity: 0.85;
+            transition: opacity 0.2s ease;
+        }
+        .tool-tile:hover .tile-icon {
+            opacity: 1;
+        }
+
+        /* Footer Ajustable y Efectos Hover Modernos */
+        .footer {
+            margin-top: auto;
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            border-top: 1px solid var(--border-color);
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .hover-primary {
+            transition: color 0.2s ease;
+        }
+
+        .hover-primary:hover {
+            color: #0d6efd !important;
+        }
+    </style>
+    
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <nav class="navbar navbar-expand py-3 custom-nav sticky-top">
+        <div class="container justify-content-between">
+            <a class="navbar-brand text-current m-0" href="/">
+                Utiles<span class="text-primary">RD</span>
+            </a>
+            
+            <div class="d-flex align-items-center gap-4">
+                <a href="/#herramientas" class="nav-link-custom text-current d-none d-sm-inline">Herramientas</a>
+                <a href="/blog" class="nav-link-custom text-current">Blog</a>
+                
+                <button id="theme-toggle" class="btn p-0 border-0 text-current fs-5 d-flex align-items-center" aria-label="Cambiar tema">
+                    <i class="bi bi-moon-stars" id="theme-icon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row align-items-center g-3">
+                <div class="col-md-6 text-md-start text-center">
+                    <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-md-start mb-0">
+                        <a href="/sobre-nosotros" class="text-decoration-none small text-muted hover-primary">Sobre nosotros</a>
+                        <a href="/contacto" class="text-decoration-none small text-muted hover-primary">Contacto</a>
+                        <a href="/politica-de-privacidad" class="text-decoration-none small text-muted hover-primary">Política de privacidad</a>
+                        <a href="/terminos-y-condiciones" class="text-decoration-none small text-muted hover-primary">Términos y condiciones</a>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end text-center">
+                    <p class="mb-1 small">&copy; 2026 <strong>UtilesRD</strong>. Todos los derechos reservados.</p>
+                    <small class="text-muted" style="font-size: 0.8rem;">Herramientas web optimizadas para la República Dominicana.</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        
+        // Sincronizar estado inicial del icono basado en el atributo del documento
+        const temaActual = document.documentElement.getAttribute('data-theme');
+        actualizarIcono(temaActual);
+
+        themeToggle.addEventListener('click', () => {
+            const temaActivo = document.documentElement.getAttribute('data-theme');
+            const nuevoTema = temaActivo === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', nuevoTema);
+            localStorage.setItem('theme', nuevoTema);
+            actualizarIcono(nuevoTema);
+        });
+
+        function actualizarIcono(tema) {
+            if (tema === 'dark') {
+                themeIcon.className = "bi bi-sun-fill text-warning";
+            } else {
+                themeIcon.className = "bi bi-moon-stars";
+            }
+        }
+    });
+    </script>
+</body>
+</html>

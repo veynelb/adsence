@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog de Tecnología, Negocios y Finanzas | UtilesRD{% endblock %}
+{% block description %}Artículos educativos de alta calidad sobre Tecnología, Inteligencia Artificial, Gaming, Linux, Negocios y Programación en República Dominicana.{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <h1 class="h2 fw-bold text-current mb-4">Últimas publicaciones</h1>
+            <hr class="mb-4" style="color: var(--border-color); opacity: 1;">
+
+            <div class="row row-cols-1 g-4">
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm p-3 border-wall">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex gap-2 mb-3 align-items-center">
+                                    <span class="badge bg-success-subtle text-success px-2 py-1" style="font-size: 12px; border-radius: 6px;">Negocios</span>
+                                    <small class="text-muted">26 de Mayo, 2026</small>
+                                </div>
+                                <h2 class="h4 card-title fw-bold mb-3">
+                                    <a href="/blog/como-calcular-itbis-republica-dominicana-dgii" class="text-decoration-none text-current hover-primary" style="letter-spacing: -0.4px;">Cómo calcular el ITBIS en República Dominicana de forma correcta (DGII)</a>
+                                </h2>
+                                <p class="card-text text-muted small style-lh">Guía completa paso a paso para calcular y desglosar el ITBIS (18% y 16%) en tus facturas según las normativas vigentes de la DGII.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                <small class="text-muted"><i class="bi bi-clock me-1"></i>6 min de lectura</small>
+                                <a href="/blog/como-calcular-itbis-republica-dominicana-dgii" class="btn btn-sm btn-primary fw-medium px-3 shadow-sm" style="border-radius: 8px;">Leer artículo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm p-3 border-wall">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex gap-2 mb-3 align-items-center">
+                                    <span class="badge bg-primary-subtle text-primary px-2 py-1" style="font-size: 12px; border-radius: 6px;">Programación</span>
+                                    <small class="text-muted">20 de Mayo, 2026</small>
+                                </div>
+                                <h2 class="h4 card-title fw-bold mb-3">
+                                    <a href="/blog/introduccion-desarrollo-web-flask-python" class="text-decoration-none text-current hover-primary" style="letter-spacing: -0.4px;">Introducción al desarrollo web con Flask y Python en 2026</a>
+                                </h2>
+                                <p class="card-text text-muted small style-lh">Aprende a crear aplicaciones web modulares, rápidas y escalables utilizando el framework Flask y buenas prácticas de programación.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                <small class="text-muted"><i class="bi bi-clock me-1"></i>8 min de lectura</small>
+                                <a href="/blog/introduccion-desarrollo-web-flask-python" class="btn btn-sm btn-primary fw-medium px-3 shadow-sm" style="border-radius: 8px;">Leer artículo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mt-5 mt-lg-0">
+            <div class="card border-0 shadow-sm p-4 sticky-top border-wall" style="top: 90px; border-radius: 16px;">
+                <h3 class="h5 fw-bold text-current mb-3">Categorías</h3>
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item d-flex justify-content-between align-items-center px-0 border-0 py-2 bg-transparent text-muted small">Tecnología <span class="badge bg-transparent text-muted border border-wall-element" style="font-size: 10px; border-color: var(--border-color) !important;">Próximamente</span></div>
+                    <div class="list-group-item d-flex justify-content-between align-items-center px-0 border-0 py-2 bg-transparent text-muted small">IA <span class="badge bg-transparent text-muted border border-wall-element" style="font-size: 10px; border-color: var(--border-color) !important;">Próximamente</span></div>
+                    <div class="list-group-item d-flex justify-content-between align-items-center px-0 border-0 py-2 bg-transparent text-muted small">Gaming <span class="badge bg-transparent text-muted border border-wall-element" style="font-size: 10px; border-color: var(--border-color) !important;">Próximamente</span></div>
+                    <div class="list-group-item d-flex justify-content-between align-items-center px-0 border-0 py-2 bg-transparent text-muted small">Linux <span class="badge bg-transparent text-muted border border-wall-element" style="font-size: 10px; border-color: var(--border-color) !important;">Próximamente</span></div>
+                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center px-0 border-0 py-2 bg-transparent text-current fw-semibold">Negocios <i class="bi bi-chevron-right small text-muted"></i></a>
+                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center px-0 border-0 py-2 bg-transparent text-current fw-semibold">Programación <i class="bi bi-chevron-right small text-muted"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-primary:hover { color: #0d6efd !important; }
+    .style-lh { line-height: 1.6; }
+    .list-group-item-action { transition: color 0.2s ease; }
+    .list-group-item-action:hover { color: #0d6efd !important; background-color: transparent !important; }
+</style>
+{% endblock %}

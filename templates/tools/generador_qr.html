@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block title %}Generador de Códigos QR Gratis Online | UtilesRD{% endblock %}
+{% block description %}Crea y descarga códigos QR personalizados gratis al instante. Ideal para enlaces, redes sociales, Wi-Fi o textos. Sin registros.{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            
+            <div class="card shadow border-0 p-4 mb-4" style="border-radius: 16px;">
+                <div class="card-body">
+                    <h1 class="h3 fw-bold text-center mb-4 text-dark">
+                        <i class="bi bi-qr-code me-2 text-primary"></i>Generador de Códigos QR
+                    </h1>
+                    
+                    <div class="row g-4">
+                        <div class="col-md-7">
+                            <form id="qrForm" onsubmit="event.preventDefault();">
+                                <div class="mb-3">
+                                    <label for="qr-text" class="form-label fw-semibold text-secondary">Enlace (URL) o Texto</label>
+                                    <textarea class="form-control" id="qr-text" rows="4" placeholder="Escribe aquí tu enlace (ej: https://utilesrd.com) o cualquier texto que quieras convertir..." autofocus></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="col-md-5 d-flex flex-column align-items-center justify-content-center border-start border-light">
+                            <div id="canvas-contenedor" class="bg-white p-3 rounded shadow-sm mb-3 border d-none">
+                                <div id="qrcode"></div>
+                            </div>
+                            
+                            <div id="qr-placeholder" class="text-center p-4 text-muted border border-dashed rounded w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+                                <i class="bi bi-qr-code-scan fs-1 mb-2 text-light-emphasis"></i>
+                                <small>Escribe algo a la izquierda para generar el QR automáticamente</small>
+                            </div>
+
+                            <button id="btn-descargar" class="btn btn-success w-100 d-none">
+                                <i class="bi bi-download me-2"></i>Descargar QR (PNG)
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="mt-5 text-secondary px-2">
+                <h2 class="h4 text-dark fw-bold mb-3">¿Qué es un código QR y cómo usarlo de forma estratégica?</h2>
+                <p>Un código QR (<em>Quick Response</em> o de respuesta rápida) es un módulo bidimensional diseñado para almacenar datos que pueden ser leídos por cámaras de teléfonos inteligentes. En la actualidad, es una herramienta indispensable para conectar el mundo físico con el ecosistema digital.</p>
+                
+                <h3 class="h5 text-dark fw-bold mt-4">Casos de uso comunes para tus QR</h3>
+                <ul>
+                    <li><strong>Marketing y Negocios:</strong> Enlaza menús digitales de restaurantes, tarjetas de presentación virtuales (vCards) o catálogos de productos en WhatsApp.</li>
+                    <li><strong>Redes Sociales:</strong> Dirige a tus clientes o seguidores directo a tus perfiles de Instagram, TikTok o canales de streaming.</li>
+                    <li><strong>Logística y Organización:</strong> Almacena textos planos, seriales o credenciales para inventarios rápidos.</li>
+                </ul>
+
+                <h3 class="h5 text-dark fw-bold mt-4">Ventajas de usar UtilesRD</h3>
+                <p>A diferencia de otras plataformas que limitan las descargas, añaden marcas de agua molestas o te exigen registrarte, nuestra utilidad crea **códigos QR estáticos ilimitados y completamente libres de costo**, procesados con total privacidad directamente en tu navegador web.</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const textInput = document.getElementById('qr-text');
+    const qrContenedor = document.getElementById('qrcode');
+    const canvasContenedor = document.getElementById('canvas-contenedor');
+    const placeholder = document.getElementById('qr-placeholder');
+    const btnDescargar = document.getElementById('btn-descargar');
+
+    // Inicializamos la instancia del generador QR
+    let qrGenerador = new QRCode(qrContenedor, {
+        width: 200,
+        height: 200,
+        colorDark : "#111827", // Gris oscuro moderno para mejor escaneo
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+
+    function actualizarQR() {
+        const contenido = textInput.value.trim();
+
+        if (contenido === "") {
+            canvasContenedor.classList.add('d-none');
+            btnDescargar.classList.add('d-none');
+            placeholder.classList.remove('d-none');
+            return;
+        }
+
+        // Mostrar elementos de la UI
+        placeholder.classList.add('d-none');
+        canvasContenedor.classList.remove('d-none');
+        btnDescargar.classList.remove('d-none');
+
+        // Regenerar el código QR
+        qrGenerador.makeCode(contenido);
+    }
+
+    // Escucha cambios en tiempo real mientras el usuario tipea
+    textInput.addEventListener('input', actualizarQR);
+
+    // Lógica para descargar el código generado como imagen PNG
+    btnDescargar.addEventListener('click', function() {
+        // qrcode.js renderiza usando una etiqueta <img> dentro del contenedor
+        const img = qrContenedor.querySelector('img');
+        if (img) {
+            const enlaceDescarga = document.createElement('a');
+            enlaceDescarga.href = img.src;
+            enlaceDescarga.download = 'utilesrd-codigo-qr.png';
+            document.body.appendChild(enlaceDescarga);
+            enlaceDescarga.click();
+            document.body.removeChild(enlaceDescarga);
+        }
+    });
+});
+</script>
+{% endblock %}

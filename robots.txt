@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Allow: /tools/
+Allow: /blog/
+Disallow: /static/
+
+# Ruta absoluta hacia tu mapa del sitio (Cambia utilesrd.com por tu dominio real)
+Sitemap: https://utilesrd.com/sitemap.xml

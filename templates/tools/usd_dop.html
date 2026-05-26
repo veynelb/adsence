@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}Conversor USD a DOP República Dominicana | Tasa del Dólar Hoy | UtilesRD{% endblock %}
+{% block description %}Calcula el cambio de Dólar estadounidense (USD) a Peso Dominicano (DOP) en tiempo real. Tasa actualizada y conversión bidireccional exacta.{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            
+            <div class="card shadow border-0 p-4 mb-4" style="border-radius: 16px;">
+                <div class="card-body">
+                    <h1 class="h3 fw-bold text-center mb-2 text-dark">
+                        <i class="bi bi-currency-exchange me-2 text-primary"></i>Conversor USD ↔ DOP
+                    </h1>
+                    <p class="text-muted text-center small mb-4">
+                        Tasa de referencia actual: <span class="fw-bold text-success">1 USD = RD$ <span id="tasa-valor">{{ tasa }}</span></span>
+                    </p>
+                    
+                    <form id="conversorForm" onsubmit="event.preventDefault();">
+                        <div class="mb-4">
+                            <label for="usd-input" class="form-label fw-semibold text-secondary">Dólares Estadounidenses (USD)</label>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text bg-primary text-white fw-bold">US$</span>
+                                <input type="number" step="0.01" class="form-control" id="usd-input" placeholder="0.00" autocomplete="off" autofocus>
+                            </div>
+                        </div>
+
+                        <div class="text-center mb-4 my-2">
+                            <span class="bg-light p-2 rounded-circle border d-inline-block shadow-sm">
+                                <i class="bi bi-arrow-down-up text-primary fs-5 fw-bold"></i>
+                            </span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="dop-input" class="form-label fw-semibold text-secondary">Pesos Dominicanos (DOP)</label>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text bg-success text-white fw-bold">RD$</span>
+                                <input type="number" step="0.01" class="form-control" id="dop-input" placeholder="0.00" autocomplete="off">
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="mt-5 text-secondary px-2">
+                <h2 class="h4 text-dark fw-bold mb-3">¿Cómo calcular el cambio de Dólar a Peso Dominicano?</h2>
+                <p>El tipo de cambio entre el <strong>Dólar Estadounidense (USD)</strong> y el <strong>Peso Dominicano (DOP)</strong> fluctúa diariamente según los reportes del Banco Central de la República Dominicana y el mercado financiero local. Esta calculadora te permite conocer el valor exacto de tus divisas de forma recíproca.</p>
+                
+                <h3 class="h5 text-dark fw-bold mt-4">Fórmula de Conversión</h3>
+                <p>Para hacer el cálculo de manera manual o en hojas de cálculo, aplica la siguiente relación matemática basándote en la tasa de cambio vigente:</p>
+                <div class="bg-light p-3 rounded text-mono small mb-3">
+                    <strong>De Dólares a Pesos (Multiplicar):</strong><br>
+                    $$\text{Pesos (DOP)} = \text{Dólares (USD)} \times \text{Tasa de Cambio}$$
+                </div>
+                <div class="bg-light p-3 rounded text-mono small">
+                    <strong>De Pesos a Dólares (Dividir):</strong><br>
+                    $$\text{Dólares (USD)} = \text{Pesos (DOP)} \div \text{Tasa de Cambio}$$
+                </div>
+
+                <h3 class="h5 text-dark fw-bold mt-4">Importancia del monitoreo de divisas en RD</h3>
+                <p>Ya sea que recibas remesas, realices compras por internet en plataformas internacionales, o manejes presupuestos de software y tecnología, contar con una herramienta ligera y rápida te garantiza optimizar cada transacción sin perder dinero por comisiones ocultas.</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const usdInput = document.getElementById('usd-input');
+    const dopInput = document.getElementById('dop-input');
+    // Obtenemos la tasa inyectada de manera segura desde el backend de Flask
+    const tasa = parseFloat(document.getElementById('tasa-valor').textContent);
+
+    // Al escribir en USD -> Calcula y rellena DOP
+    usdInput.addEventListener('input', function() {
+        const usdVal = parseFloat(usdInput.value);
+        
+        if (isNaN(usdVal) || usdVal <= 0) {
+            dopInput.value = "";
+            return;
+        }
+        
+        // Operación matemática limpia redondeada a dos decimales
+        const resultadoDop = usdVal * tasa;
+        dopInput.value = resultadoDop.toFixed(2);
+    });
+
+    // Al escribir en DOP -> Calcula y rellena USD
+    dopInput.addEventListener('input', function() {
+        const dopVal = parseFloat(dopInput.value);
+        
+        if (isNaN(dopVal) || dopVal <= 0) {
+            usdInput.value = "";
+            return;
+        }
+        
+        // Operación matemática a la inversa
+        const resultadoUsd = dopVal / tasa;
+        usdInput.value = resultadoUsd.toFixed(2);
+    });
+});
+</script>
+{% endblock %}

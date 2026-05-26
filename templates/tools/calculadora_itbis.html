@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block title %}Calculadora ITBIS RD Online Gratis | UtilesRD{% endblock %}
+{% block description %}Calcula el ITBIS en República Dominicana fácilmente online gratis. Permite desglosar el ITBIS incluido o calcularlo aparte (18% y 16%).{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            
+            <div class="card shadow border-0 p-4 mb-4" style="border-radius: 16px;">
+                <div class="card-body">
+                    <h1 class="h3 fw-bold text-center mb-4 text-dark">
+                        <i class="bi bi-calculator me-2 text-primary"></i>Calculadora de ITBIS
+                    </h1>
+                    
+                    <form id="itbisForm" onsubmit="event.preventDefault();">
+                        <div class="mb-3">
+                            <label for="monto" class="form-label fw-semibold">Monto en RD$</label>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text bg-light text-muted fw-bold">RD$</span>
+                                <input type="number" step="0.01" class="form-control" id="monto" placeholder="Ej. 1000" autocomplete="off" autofocus>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="tipo_calculo" class="form-label fw-semibold">Tipo de operación</label>
+                                <select class="form-select" id="tipo_calculo">
+                                    <option value="aparte" selected>Calcular ITBIS aparte (+)</option>
+                                    <option value="incluido">Calcular ITBIS incluido (Desglosar)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="tasa" class="form-label fw-semibold">Tasa aplicable</label>
+                                <select class="form-select" id="tasa">
+                                    <option value="0.18" selected>18% (Tasa General)</option>
+                                    <option value="0.16">16% (Tasa Reducida)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div id="contenedor-resultados" class="bg-light p-4 rounded-3 d-none">
+                        <h3 class="h6 fw-bold mb-3 text-uppercase text-secondary tracking-wider text-center">Resultados del Cálculo</h3>
+                        
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Subtotal:</span>
+                            <span class="fw-semibold text-dark" id="res-subtotal">RD$ 0.00</span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">ITBIS (<span id="res-tasa-pct">18</span>%):</span>
+                            <span class="fw-bold text-danger" id="res-itbis">RD$ 0.00</span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between border-top pt-3 mt-2 fs-5">
+                            <span class="fw-bold text-dark">Total General:</span>
+                            <span class="fw-bold text-success" id="res-total">RD$ 0.00</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="mt-5 text-secondary px-2">
+                <h2 class="h4 text-dark fw-bold mb-3">¿Cómo calcular el ITBIS en la República Dominicana?</h2>
+                <p>El <strong>ITBIS</strong> (Impuesto sobre Transferencias de Bienes Industrializados y Servicios) es el principal impuesto al consumo administrado por la DGII en la República Dominicana. Dependiendo de la actividad comercial, se aplican tasas del 18% o tarifas reducidas del 16%.</p>
+                
+                <h3 class="h5 text-dark fw-bold mt-4">¿Cómo funciona esta calculadora?</h3>
+                <p>Nuestra herramienta optimizada te permite realizar dos tipos fundamentales de operaciones financieras de forma inmediata:</p>
+                <ul>
+                    <li><strong>ITBIS Aparte:</strong> Úsalo cuando conozcas el precio neto del producto o servicio y requieras sumarle el impuesto correspondiente para facturar el monto total a tu cliente.</li>
+                    <li><strong>ITBIS Incluido (Desglose):</strong> Ideal cuando ya posees el precio final de venta y necesitas extraer de manera exacta la porción que corresponde al impuesto fiscal y qué cantidad pertenece al beneficio neto o costo base.</li>
+                </ul>
+
+                <h3 class="h5 text-dark fw-bold mt-4">Fórmulas Matemáticas Oficiales</h3>
+                <p>Si deseas validar las operaciones manualmente, el sistema ejecuta matemáticamente las siguientes reglas:</p>
+                <p class="bg-light p-3 rounded text-mono small">
+                    <strong>Para ITBIS aparte (18%):</strong><br>
+                    $$\text{ITBIS} = \text{Monto} \times 0.18$$<br>
+                    $$\text{Total} = \text{Monto} + \text{ITBIS}$$
+                </p>
+                <p class="bg-light p-3 rounded text-mono small">
+                    <strong>Para desglose de ITBIS incluido (18%):</strong><br>
+                    $$\text{Subtotal} = \text{Total} \div 1.18$$<br>
+                    $$\text{ITBIS} = \text{Total} - \text{Subtotal}$$
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const inputMonto = document.getElementById('monto');
+    const selectTipo = document.getElementById('tipo_calculo');
+    const selectTasa = document.getElementById('tasa');
+    
+    const contenedorResultados = document.getElementById('contenedor-resultados');
+    const resSubtotal = document.getElementById('res-subtotal');
+    const resItbis = document.getElementById('res-itbis');
+    const resTotal = document.getElementById('res-total');
+    const resTasaPct = document.getElementById('res-tasa-pct');
+
+    // Función formateadora de moneda dominicana
+    const formatCurrency = (val) => {
+        return "RD$ " + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
+
+    function calcular() {
+        const monto = parseFloat(inputMonto.value);
+        
+        // Si el input está vacío o no es un número válido, ocultamos los resultados
+        if (isNaN(monto) || monto <= 0) {
+            contenedorResultados.classList.add('d-none');
+            return;
+        }
+
+        const tipo = selectTipo.value;
+        const tasa = parseFloat(selectTasa.value);
+        
+        let subtotal = 0;
+        let itbis = 0;
+        let total = 0;
+
+        if (tipo === 'aparte') {
+            subtotal = monto;
+            itbis = subtotal * tasa;
+            total = subtotal + itbis;
+        } else {
+            total = monto;
+            subtotal = total / (1 + tasa);
+            itbis = total - subtotal;
+        }
+
+        // Inyectar datos en la UI
+        resSubtotal.textContent = formatCurrency(subtotal);
+        resItbis.textContent = formatCurrency(itbis);
+        resTotal.textContent = formatCurrency(total);
+        resTasaPct.textContent = (tasa * 100).toString();
+
+        // Mostrar el contenedor con animación suave
+        contenedorResultados.classList.remove('d-none');
+    }
+
+    // Escuchar eventos en tiempo real para una experiencia de usuario fluida
+    inputMonto.addEventListener('input', calcular);
+    selectTipo.addEventListener('change', calcular);
+    selectTasa.addEventListener('change', calcular);
+});
+</script>
+{% endblock %}

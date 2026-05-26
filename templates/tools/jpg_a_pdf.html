@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+
+{% block title %}Convertidor de Archivos Universal Online | UtilesRD{% endblock %}
+{% block description %}Convierte archivos al tipo que quieras y viceversa: Word a PDF, JPG a PDF, y formatos de imagen en segundos de forma asíncrona.{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            
+            <div class="card shadow border-0 p-4 mb-4" style="border-radius: 16px;">
+                <div class="card-body">
+                    <h1 class="h3 fw-bold text-center mb-2 text-dark">
+                        <i class="bi bi-file-earmark-arrow-up me-2 text-primary"></i>Convertidor Universal de Archivos
+                    </h1>
+                    <p class="text-muted text-center small mb-4">Convierte tus documentos y fotos al formato que necesites de forma instantánea.</p>
+                    
+                    <div id="drop-zone" class="border border-2 border-dashed rounded-3 p-5 text-center bg-light mb-4" style="cursor: pointer; transition: background 0.2s;">
+                        <i class="bi bi-file-earmark-text text-primary display-4 mb-3 d-block"></i>
+                        <p class="fw-semibold text-secondary mb-1">Selecciona o arrastra el archivo que deseas convertir</p>
+                        <span class="text-muted small">Soporta: .docx (Word), .pdf, .jpg, .jpeg, .png</span>
+                        <input type="file" id="file-input" accept=".docx, .pdf, .jpg, .jpeg, .png" class="d-none">
+                    </div>
+
+                    <div id="conversion-panel" class="d-none border rounded p-4 bg-white shadow-sm">
+                        <div class="d-flex align-items-center mb-4 bg-light p-3 rounded">
+                            <i id="file-icon" class="bi bi-file-earmark fs-2 me-3"></i>
+                            <div class="text-truncate">
+                                <h5 class="mb-0 text-dark fw-bold text-truncate" id="file-name">nombre-del-archivo.ext</h5>
+                                <small class="text-muted" id="file-size">0 KB</small>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="target-format" class="form-label fw-bold text-secondary">Convertir este archivo a:</label>
+                            <select class="form-select form-select-lg border-primary" id="target-format">
+                                </select>
+                        </div>
+
+                        <button id="btn-convertir" class="btn btn-primary btn-lg w-100 py-3 fw-bold">
+                            <i class="bi bi-gear-wide-connected me-2"></i>Convertir Archivo
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="mt-5 text-secondary px-2">
+                <h2 class="h4 text-dark fw-bold mb-3">Herramienta de conversión asíncrona en el cliente</h2>
+                <p>En <strong>UtilesRD</strong> optimizamos el procesamiento de documentos eliminando las colas de espera en servidores remotos. Al realizar la conversión directamente en tu navegador, tu información se procesa de forma aislada, garantizando velocidad inmediata y privacidad de datos.</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('file-input');
+    const conversionPanel = document.getElementById('conversion-panel');
+    const labelFileName = document.getElementById('file-name');
+    const labelFileSize = document.getElementById('file-size');
+    const iconFile = document.getElementById('file-icon');
+    const selectTarget = document.getElementById('target-format');
+    const btnConvertir = document.getElementById('btn-convertir');
+
+    let archivoSeleccionado = null;
+
+    // Controladores de eventos de carga
+    dropZone.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', (e) => cargarArchivo(e.target.files[0]));
+
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.style.background = "#e2e8f0"; });
+    dropZone.addEventListener('dragleave', () => { dropZone.style.background = "#f8f9fa"; });
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.style.background = "#f8f9fa";
+        if (e.dataTransfer.files.length > 0) cargarArchivo(e.dataTransfer.files[0]);
+    });
+
+    // Detecta el tipo de archivo y adapta las opciones del selector como lo hace iLovePDF
+    function cargarArchivo(file) {
+        if (!file) return;
+        archivoSeleccionado = file;
+
+        labelFileName.textContent = file.name;
+        labelFileSize.textContent = `${(file.size / 1024).toFixed(1)} KB`;
+        
+        // Limpiar opciones anteriores
+        selectTarget.innerHTML = "";
+        
+        const ext = file.name.split('.').pop().toLowerCase();
+
+        // Configuración de UI según la extensión detectada
+        if (ext === 'docx') {
+            iconFile.className = "bi bi-file-earmark-word text-info fs-2 me-3";
+            selectTarget.innerHTML = `<option value="pdf">Documento PDF (.pdf)</option>`;
+        } 
+        else if (ext === 'jpg' || ext === 'jpeg' || ext === 'png') {
+            iconFile.className = "bi bi-file-earmark-image text-primary fs-2 me-3";
+            if (ext === 'png') {
+                selectTarget.innerHTML = `
+                    <option value="pdf">Documento PDF (.pdf)</option>
+                    <option value="jpg">Imagen JPG (.jpg)</option>
+                `;
+            } else {
+                selectTarget.innerHTML = `
+                    <option value="pdf">Documento PDF (.pdf)</option>
+                    <option value="png">Imagen PNG (.png)</option>
+                `;
+            }
+        } 
+        else if (ext === 'pdf') {
+            iconFile.className = "bi bi-file-earmark-pdf text-danger fs-2 me-3";
+            selectTarget.innerHTML = `<option value="jpg">Imágenes extraídas (.jpg)</option>`;
+        } 
+        else {
+            alert("Formato no soportado en esta fase.");
+            return;
+        }
+
+        conversionPanel.classList.remove('d-none');
+    }
+
+    // Ejecución de la lógica de conversión asíncrona
+    btnConvertir.addEventListener('click', async function() {
+        if (!archivoSeleccionado) return;
+
+        btnConvertir.disabled = true;
+        btnConvertir.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Convirtiendo de forma asíncrona...`;
+
+        const formatoDestino = selectTarget.value;
+        const extOrigen = archivoSeleccionado.name.split('.').pop().toLowerCase();
+
+        try {
+            // CASO 1: CONVERTIR WORD (.docx) A PDF
+            if (extOrigen === 'docx' && formatoDestino === 'pdf') {
+                const reader = new FileReader();
+                reader.readAsArrayBuffer(archivoSeleccionado);
+                reader.onload = async function(e) {
+                    const arrayBuffer = e.target.result;
+                    
+                    // mammoth extrae el texto plano estructurado asíncronamente desde el binario del docx
+                    const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
+                    const textoDocx = result.value;
+
+                    const { jsPDF } = window.jspdf;
+                    const doc = new jsPDF();
+                    
+                    // Dividir el texto de forma inteligente para que quepa en las páginas de jsPDF
+                    const lineas = doc.splitTextToSize(textoDocx, 180);
+                    doc.text(lineas, 15, 20);
+                    
+                    doc.save(archivoSeleccionado.name.replace('.docx', '.pdf'));
+                    finalizarProceso();
+                };
+            }
+            // CASO 2: CONVERTIR IMAGEN (JPG/PNG) A PDF
+            else if ((extOrigen === 'jpg' || extOrigen === 'jpeg' || extOrigen === 'png') && formatoDestino === 'pdf') {
+                const reader = new FileReader();
+                reader.readAsDataURL(archivoSeleccionado);
+                reader.onload = function(e) {
+                    const imgData = e.target.result;
+                    const { jsPDF } = window.jspdf;
+                    const doc = new jsPDF('p', 'mm', 'a4');
+                    
+                    const pWidth = doc.internal.pageSize.getWidth();
+                    const pHeight = doc.internal.pageSize.getHeight();
+
+                    const img = new Image();
+                    img.src = imgData;
+                    img.onload = function() {
+                        let ratio = Math.min((pWidth - 20) / img.width, (pHeight - 20) / img.height);
+                        let fWidth = img.width * ratio;
+                        let fHeight = img.height * ratio;
+                        
+                        doc.addImage(imgData, 'JPEG', (pWidth - fWidth)/2, (pHeight - fHeight)/2, fWidth, fHeight);
+                        doc.save(archivoSeleccionado.name.substring(0, archivoSeleccionado.name.lastIndexOf('.')) + '.pdf');
+                        finalizarProceso();
+                    };
+                };
+            }
+            // CASO 3: INTERCAMBIO ENTRE FORMATOS DE IMAGEN (PNG a JPG o viceversa)
+            else if (formatoDestino === 'jpg' || formatoDestino === 'png') {
+                const reader = new FileReader();
+                reader.readAsDataURL(archivoSeleccionado);
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0);
+
+                        const mime = formatoDestino === 'jpg' ? 'image/jpeg' : 'image/png';
+                        
+                        canvas.toBlob((blob) => {
+                            const link = document.createElement('a');
+                            link.href = URL.createObjectURL(blob);
+                            link.download = archivoSeleccionado.name.substring(0, archivoSeleccionado.name.lastIndexOf('.')) + '.' + formatoDestino;
+                            link.click();
+                            finalizarProceso();
+                        }, mime, 0.95);
+                    };
+                };
+            }
+        } catch (err) {
+            alert("Error procesando la estructura del archivo.");
+            finalizarProceso();
+        }
+    });
+
+    function finalizarProceso() {
+        btnConvertir.disabled = false;
+        btnConvertir.innerHTML = `<i class="bi bi-gear-wide-connected me-2"></i>Convertir Archivo`;
+    }
+});
+</script>
+{% endblock %}
