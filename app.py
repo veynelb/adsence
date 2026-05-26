@@ -1,4 +1,5 @@
 from flask import Flask, render_template, make_response
+from flask import send_from_directory
 from routes.tools import tools_bp
 from routes.blog import blog_bp
 from routes.legal import legal_bp 
@@ -32,7 +33,9 @@ def robots():
 def sitemap():
     return render_template('sitemap.xml'), 200, {'Content-Type': 'application/xml'}
 
-
+@app.route("/ads.txt")
+def ads():
+    return send_from_directory("static", "ads.txt")
 
 if __name__ == '__main__':
     app.run(debug=True)
