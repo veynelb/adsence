@@ -198,18 +198,23 @@
     <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- INICIALIZADOR AUTOMÁTICO DE ANUNCIOS ADSENSE (CORREGIDO) -->
+    <!-- INICIALIZADOR AUTOMÁTICO DE ANUNCIOS ADSENSE (ENFOQUE SEGURO) -->
     <script>
         window.addEventListener("load", function () {
-            // Selecciona únicamente los bloques que Google NO haya procesado todavía
-            const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status="done"])');
-            ads.forEach(() => {
-                try {
-                    (window.adsbygoogle = window.adsbygoogle || []).push({});
-                } catch (e) {
-                    console.error("AdSense Error: ", e);
-                }
-            });
+            // Un retraso controlado de 200ms previene colisiones con la carga asíncrona de los anuncios automáticos
+            setTimeout(function() {
+                const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status="done"])');
+                ads.forEach((ad) => {
+                    try {
+                        // Segunda validación estricta antes de realizar el push
+                        if (!ad.hasAttribute('data-adsbygoogle-status')) {
+                            (window.adsbygoogle = window.adsbygoogle || []).push({});
+                        }
+                    } catch (e) {
+                        console.error("AdSense Error Controlado: ", e);
+                    }
+                });
+            }, 200);
         });
     </script>
 
