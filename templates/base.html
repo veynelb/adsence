@@ -1,12 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
 
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>
         {% block title %}
@@ -15,15 +12,10 @@
     </title>
 
     <meta name="description"
-          content="{% block description %}
-          Todas las herramientas online que necesitas en un solo lugar.
-          Calculadora ITBIS, conversor de divisas, generadores y más.
-          {% endblock %}">
+          content="{% block description %}Todas las herramientas online que necesitas en un solo lugar. Calculadora ITBIS, conversor de divisas, generadores y más.{% endblock %}">
 
-    <!-- GOOGLE ADSENSE -->
-    <meta name="google-adsense-account"
-          content="ca-pub-8256696936186052">
-
+    <!-- GOOGLE ADSENSE (Cargado de forma global y eficiente una sola vez) -->
+    <meta name="google-adsense-account" content="ca-pub-8256696936186052">
     <script async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8256696936186052"
             crossorigin="anonymous">
@@ -38,7 +30,6 @@
           rel="stylesheet">
 
     <style>
-
         :root {
             --bg-main: #ffffff;
             --bg-nav: #ffffff;
@@ -70,18 +61,11 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            transition: background-color 0.2s ease,
-                        color 0.2s ease;
+            transition: background-color 0.2s ease, color 0.2s ease;
         }
 
-        .text-current {
-            color: var(--text-color) !important;
-        }
-
-        .text-muted {
-            color: var(--text-muted) !important;
-        }
-
+        .text-current { color: var(--text-color) !important; }
+        .text-muted { color: var(--text-muted) !important; }
         .custom-nav {
             background-color: var(--bg-nav) !important;
             border-bottom: 1px solid var(--border-color) !important;
@@ -118,26 +102,11 @@
             transition: all 0.2s ease;
         }
 
-        .tool-tile:hover {
-            background-color: var(--bg-tile-hover);
-        }
-
-        .arrow-animate {
-            transition: transform 0.2s ease;
-        }
-
-        .tool-tile:hover .arrow-animate {
-            transform: translateX(4px);
-        }
-
-        .tile-icon {
-            opacity: 0.85;
-            transition: opacity 0.2s ease;
-        }
-
-        .tool-tile:hover .tile-icon {
-            opacity: 1;
-        }
+        .tool-tile:hover { background-color: var(--bg-tile-hover); }
+        .arrow-animate { transition: transform 0.2s ease; }
+        .tool-tile:hover .arrow-animate { transform: translateX(4px); }
+        .tile-icon { opacity: 0.85; transition: opacity 0.2s ease; }
+        .tool-tile:hover .tile-icon { opacity: 1; }
 
         .footer {
             margin-top: auto;
@@ -146,243 +115,133 @@
             border-top: 1px solid var(--border-color);
         }
 
-        .hover-primary {
-            transition: color 0.2s ease;
-        }
-
-        .hover-primary:hover {
-            color: #0d6efd !important;
-        }
+        .hover-primary { transition: color 0.2s ease; }
+        .hover-primary:hover { color: #0d6efd !important; }
 
         /* ADSENSE */
-
         .ads-container {
-
             width: 100%;
-
             max-width: 1000px;
-
             margin: 30px auto;
-
             padding-left: 15px;
             padding-right: 15px;
-
             min-height: 120px;
-
             overflow: hidden;
         }
 
         .adsbygoogle {
-
             display: block !important;
-
             width: 100% !important;
-
             min-width: 300px;
-
             min-height: 90px;
         }
-
     </style>
-
-    <script>
-
-        const savedTheme =
-            localStorage.getItem('theme') || 'light';
-
-        document.documentElement
-            .setAttribute('data-theme', savedTheme);
-
-    </script>
 
     {% block extra_css %}{% endblock %}
 
 </head>
-
 <body>
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand py-3 custom-nav sticky-top">
-
         <div class="container justify-content-between">
-
-            <a class="navbar-brand text-current m-0"
-               href="/">
-
+            <a class="navbar-brand text-current m-0" href="/">
                 Utiles<span class="text-primary">RD</span>
-
             </a>
 
             <div class="d-flex align-items-center gap-4">
-
-                <a href="/#herramientas"
-                   class="nav-link-custom text-current d-none d-sm-inline">
-
+                <a href="/#herramientas" class="nav-link-custom text-current d-none d-sm-inline">
                     Herramientas
-
                 </a>
-
-                <a href="/blog"
-                   class="nav-link-custom text-current">
-
+                <a href="/blog" class="nav-link-custom text-current">
                     Blog
-
                 </a>
-
                 <button id="theme-toggle"
                         class="btn p-0 border-0 text-current fs-5 d-flex align-items-center"
                         aria-label="Cambiar tema">
-
-                    <i class="bi bi-moon-stars"
-                       id="theme-icon"></i>
-
+                    <i class="bi bi-moon-stars" id="theme-icon"></i>
                 </button>
-
             </div>
-
         </div>
-
     </nav>
 
-    <!-- CONTENIDO -->
+    <!-- CONTENIDO CONTENEDOR MÁSTER -->
     <main class="flex-grow-1">
-
         {% block content %}{% endblock %}
-
     </main>
 
     <!-- FOOTER -->
     <footer class="footer py-5">
-
         <div class="container">
-
             <div class="row align-items-center g-3">
-
                 <div class="col-md-6 text-md-start text-center">
-
-                    <div class="d-flex flex-wrap gap-3
-                                justify-content-center
-                                justify-content-md-start">
-
-                        <a href="/sobre-nosotros"
-                           class="text-decoration-none small text-muted hover-primary">
-
-                            Sobre nosotros
-
-                        </a>
-
-                        <a href="/contacto"
-                           class="text-decoration-none small text-muted hover-primary">
-
-                            Contacto
-
-                        </a>
-
-                        <a href="/politica-de-privacidad"
-                           class="text-decoration-none small text-muted hover-primary">
-
-                            Política de privacidad
-
-                        </a>
-
-                        <a href="/terminos-y-condiciones"
-                           class="text-decoration-none small text-muted hover-primary">
-
-                            Términos y condiciones
-
-                        </a>
-
+                    <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-md-start">
+                        <a href="/sobre-nosotros" class="text-decoration-none small text-muted hover-primary">Sobre nosotros</a>
+                        <a href="/contacto" class="text-decoration-none small text-muted hover-primary">Contacto</a>
+                        <a href="/politica-de-privacidad" class="text-decoration-none small text-muted hover-primary">Política de privacidad</a>
+                        <a href="/terminos-y-condiciones" class="text-decoration-none small text-muted hover-primary">Términos y condiciones</a>
                     </div>
-
                 </div>
 
                 <div class="col-md-6 text-md-end text-center">
-
                     <p class="mb-1 small">
-
-                        &copy; 2026
-                        <strong>UtilesRD</strong>.
-
-                        Todos los derechos reservados.
-
+                        &copy; 2026 <strong>UtilesRD</strong>. Todos los derechos reservados.
                     </p>
-
-                    <small class="text-muted"
-                           style="font-size: 0.8rem;">
-
-                        Herramientas web optimizadas
-                        para la República Dominicana.
-
+                    <small class="text-muted" style="font-size: 0.8rem;">
+                        Herramientas web optimizadas para la República Dominicana.
                     </small>
-
                 </div>
-
             </div>
-
         </div>
-
     </footer>
 
-    <!-- Bootstrap -->
+    <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- THEME -->
+    <!-- INICIALIZADOR AUTOMÁTICO DE ANUNCIOS ADSENSE -->
     <script>
+        window.addEventListener("load", function () {
+            // Esto busca de forma automática todos los contenedores <ins class="adsbygoogle"> 
+            // que existan en la página hija y los activa de un solo golpe.
+            const ads = document.querySelectorAll('.adsbygoogle');
+            ads.forEach(() => {
+                try {
+                    (window.adsbygoogle = window.adsbygoogle || []).push({});
+                } catch (e) {
+                    console.error("AdSense Error: ", e);
+                }
+            });
+        });
+    </script>
 
+    <!-- THEME SCRIPT -->
+    <script>
         document.addEventListener("DOMContentLoaded", function() {
-
-            const themeToggle =
-                document.getElementById('theme-toggle');
-
-            const themeIcon =
-                document.getElementById('theme-icon');
-
-            const temaActual =
-                document.documentElement
-                .getAttribute('data-theme');
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            const temaActual = document.documentElement.getAttribute('data-theme');
 
             actualizarIcono(temaActual);
 
             themeToggle.addEventListener('click', () => {
-
-                const temaActivo =
-                    document.documentElement
-                    .getAttribute('data-theme');
-
-                const nuevoTema =
-                    temaActivo === 'dark'
-                    ? 'light'
-                    : 'dark';
-
-                document.documentElement
-                    .setAttribute('data-theme', nuevoTema);
-
+                const temaActivo = document.documentElement.getAttribute('data-theme');
+                const nuevoTema = temaActivo === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', nuevoTema);
                 localStorage.setItem('theme', nuevoTema);
-
                 actualizarIcono(nuevoTema);
-
             });
 
             function actualizarIcono(tema) {
-
                 if (tema === 'dark') {
-
-                    themeIcon.className =
-                        "bi bi-sun-fill text-warning";
-
+                    themeIcon.className = "bi bi-sun-fill text-warning";
                 } else {
-
-                    themeIcon.className =
-                        "bi bi-moon-stars";
-
+                    themeIcon.className = "bi bi-moon-stars";
                 }
-
             }
-
         });
-
     </script>
+
+    {% block extra_js %}{% endblock %}
 
 </body>
 </html>
-```
