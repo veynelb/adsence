@@ -2,19 +2,31 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% block title %}UtilesRD | Herramientas Online Gratis{% endblock %}</title>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+            UtilesRD | Herramientas Online Gratis
+        {% endblock %}
+    </title>
 
     <meta name="description"
-          content="{% block description %}Todas las herramientas online que necesitas en un solo lugar. Calculadora ITBIS, conversor de divisas, generadores y más.{% endblock %}">
+          content="{% block description %}
+          Todas las herramientas online que necesitas en un solo lugar.
+          Calculadora ITBIS, conversor de divisas, generadores y más.
+          {% endblock %}">
 
-    <!-- Google Adsense -->
-    <meta name="google-adsense-account" content="ca-pub-8256696936186052">
+    <!-- GOOGLE ADSENSE -->
+    <meta name="google-adsense-account"
+          content="ca-pub-8256696936186052">
 
     <script async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8256696936186052">
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8256696936186052"
+            crossorigin="anonymous">
     </script>
 
     <!-- Bootstrap -->
@@ -26,6 +38,7 @@
           rel="stylesheet">
 
     <style>
+
         :root {
             --bg-main: #ffffff;
             --bg-nav: #ffffff;
@@ -57,7 +70,8 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            transition: background-color 0.2s ease, color 0.2s ease;
+            transition: background-color 0.2s ease,
+                        color 0.2s ease;
         }
 
         .text-current {
@@ -130,7 +144,6 @@
             background-color: var(--footer-bg);
             color: var(--footer-text);
             border-top: 1px solid var(--border-color);
-            transition: background-color 0.2s ease, color 0.2s ease;
         }
 
         .hover-primary {
@@ -141,73 +154,112 @@
             color: #0d6efd !important;
         }
 
+        /* ADSENSE */
+
         .ads-container {
-            margin: 30px auto;
+
+            width: 100%;
             max-width: 1000px;
-            padding: 0 15px;
+
+            margin: 30px auto;
+
+            padding-left: 15px;
+            padding-right: 15px;
+
+            min-height: 120px;
+
+            overflow: hidden;
         }
+
+        .adsbygoogle {
+
+            display: block !important;
+
+            width: 100% !important;
+
+            min-width: 300px;
+
+            min-height: 90px;
+        }
+
     </style>
 
     <script>
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        const savedTheme =
+            localStorage.getItem('theme') || 'light';
+
+        document.documentElement
+            .setAttribute('data-theme', savedTheme);
+
     </script>
 
     {% block extra_css %}{% endblock %}
+
 </head>
 
 <body>
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand py-3 custom-nav sticky-top">
+
         <div class="container justify-content-between">
 
-            <a class="navbar-brand text-current m-0" href="/">
+            <a class="navbar-brand text-current m-0"
+               href="/">
+
                 Utiles<span class="text-primary">RD</span>
+
             </a>
 
             <div class="d-flex align-items-center gap-4">
 
                 <a href="/#herramientas"
                    class="nav-link-custom text-current d-none d-sm-inline">
+
                     Herramientas
+
                 </a>
 
                 <a href="/blog"
                    class="nav-link-custom text-current">
+
                     Blog
+
                 </a>
 
                 <button id="theme-toggle"
                         class="btn p-0 border-0 text-current fs-5 d-flex align-items-center"
                         aria-label="Cambiar tema">
 
-                    <i class="bi bi-moon-stars" id="theme-icon"></i>
+                    <i class="bi bi-moon-stars"
+                       id="theme-icon"></i>
+
                 </button>
+
             </div>
+
         </div>
+
     </nav>
 
     <!-- ANUNCIO SUPERIOR -->
     <div class="ads-container">
 
         <ins class="adsbygoogle"
-             style="display:block"
              data-ad-client="ca-pub-8256696936186052"
              data-ad-slot="1234567890"
              data-ad-format="auto"
              data-full-width-responsive="true">
         </ins>
 
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-
     </div>
 
     <!-- CONTENIDO -->
     <main class="flex-grow-1">
+
         {% block content %}{% endblock %}
+
     </main>
 
     <!-- FOOTER -->
@@ -219,69 +271,126 @@
 
                 <div class="col-md-6 text-md-start text-center">
 
-                    <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-md-start mb-0">
+                    <div class="d-flex flex-wrap gap-3
+                                justify-content-center
+                                justify-content-md-start">
 
                         <a href="/sobre-nosotros"
                            class="text-decoration-none small text-muted hover-primary">
+
                             Sobre nosotros
+
                         </a>
 
                         <a href="/contacto"
                            class="text-decoration-none small text-muted hover-primary">
+
                             Contacto
+
                         </a>
 
                         <a href="/politica-de-privacidad"
                            class="text-decoration-none small text-muted hover-primary">
+
                             Política de privacidad
+
                         </a>
 
                         <a href="/terminos-y-condiciones"
                            class="text-decoration-none small text-muted hover-primary">
+
                             Términos y condiciones
+
                         </a>
 
                     </div>
+
                 </div>
 
                 <div class="col-md-6 text-md-end text-center">
 
                     <p class="mb-1 small">
-                        &copy; 2026 <strong>UtilesRD</strong>.
+
+                        &copy; 2026
+                        <strong>UtilesRD</strong>.
+
                         Todos los derechos reservados.
+
                     </p>
 
-                    <small class="text-muted" style="font-size: 0.8rem;">
-                        Herramientas web optimizadas para la República Dominicana.
+                    <small class="text-muted"
+                           style="font-size: 0.8rem;">
+
+                        Herramientas web optimizadas
+                        para la República Dominicana.
+
                     </small>
 
                 </div>
+
             </div>
+
         </div>
+
     </footer>
 
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Theme Script -->
+    <!-- ADSENSE INIT -->
     <script>
+
+        window.addEventListener("load", function () {
+
+            const ads =
+                document.querySelectorAll(".adsbygoogle");
+
+            ads.forEach((ad) => {
+
+                try {
+
+                    (adsbygoogle =
+                        window.adsbygoogle || []).push({});
+
+                } catch (e) {
+
+                    console.log(e);
+
+                }
+
+            });
+
+        });
+
+    </script>
+
+    <!-- THEME -->
+    <script>
+
         document.addEventListener("DOMContentLoaded", function() {
 
-            const themeToggle = document.getElementById('theme-toggle');
-            const themeIcon = document.getElementById('theme-icon');
+            const themeToggle =
+                document.getElementById('theme-toggle');
+
+            const themeIcon =
+                document.getElementById('theme-icon');
 
             const temaActual =
-                document.documentElement.getAttribute('data-theme');
+                document.documentElement
+                .getAttribute('data-theme');
 
             actualizarIcono(temaActual);
 
             themeToggle.addEventListener('click', () => {
 
                 const temaActivo =
-                    document.documentElement.getAttribute('data-theme');
+                    document.documentElement
+                    .getAttribute('data-theme');
 
                 const nuevoTema =
-                    temaActivo === 'dark' ? 'light' : 'dark';
+                    temaActivo === 'dark'
+                    ? 'light'
+                    : 'dark';
 
                 document.documentElement
                     .setAttribute('data-theme', nuevoTema);
@@ -289,19 +398,27 @@
                 localStorage.setItem('theme', nuevoTema);
 
                 actualizarIcono(nuevoTema);
+
             });
 
             function actualizarIcono(tema) {
 
                 if (tema === 'dark') {
+
                     themeIcon.className =
                         "bi bi-sun-fill text-warning";
+
                 } else {
+
                     themeIcon.className =
                         "bi bi-moon-stars";
+
                 }
+
             }
+
         });
+
     </script>
 
 </body>
